@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package collaboration_service;
+option go_package = "cs3219-project-ay2223s1-g33/proto";
+
+enum CollabTunnelRequestFlags {
+  COLLAB_REQUEST_FLAG_NONE = 0;
+  COLLAB_REQUEST_FLAG_HEARTBEAT = 1;
+}
+
+enum CollabTunnelResponseFlags {
+  COLLAB_RESPONSE_FLAG_NONE = 0;
+  COLLAB_RESPONSE_FLAG_HEARTBEAT = 1;
+  COLLAB_RESPONSE_FLAG_BAD_REQUEST = 2;
+  COLLAB_RESPONSE_FLAG_UNAUTHORIZED = 4;
+  COLLAB_RESPONSE_FLAG_INTERNAL_ERROR = 1073741824; // 2 ^ 30
+}
+
+message CollabTunnelRequest {
+  bytes data = 1;
+  int32 flags = 2;
+}
+
+message CollabTunnelResponse {
+  bytes data = 1;
+  int32 flags = 2;
+}
+
+service CollabTunnelService {
+  rpc OpenStream(stream CollabTunnelRequest) returns (stream CollabTunnelResponse);
+}

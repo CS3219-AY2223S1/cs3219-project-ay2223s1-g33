@@ -1,0 +1,5 @@
+FROM redis:7-alpine3.16
+
+EXPOSE 6379
+ENV REDIS_PASSWORD="$REDIS_PASSWORD"
+ENTRYPOINT redis-server --requirepass $REDIS_PASSWORD
